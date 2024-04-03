@@ -9,3 +9,12 @@ def status():
     """Return status"""
     res = {"status": "OK"}
     return jsonify(res)
+
+
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+def stats():
+    """Return stats"""
+    stats = {}
+    for k, v in storage.all().items():
+        stats[k] = v.to_dict()
+    return jsonify(res)
