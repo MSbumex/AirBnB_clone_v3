@@ -9,6 +9,16 @@ app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
+@app.teardown_appcontext
+def close_storage(exception):
+    """Close storage"""
+    storage.close()
+
+@app.errorhandler(404)
+def not_found(error):
+    """Return 404 error"""
+    return {"error": "Not found"}, 404
+
 if __name__ == "__main__":
     HOST = getenv("HBNB_API_HOST", "0.0.0.0")
     PORT = getenv("HBNB_API_PORT", 5000)
